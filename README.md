@@ -48,4 +48,4 @@ Au lieu d'utiliser `git commit -m 'Your message'`, vous pouvez taper: `git cz` a
 - Temps passé (Jira)
 - Commentaire (Jira)
 
-Ensuite un commit est génère avec c'est information.
+Ensuite un commit est génère avec ses information.
