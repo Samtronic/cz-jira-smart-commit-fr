@@ -1,0 +1,8 @@
+{
+  "path": "./",
+  "scopes": {
+    "jiraPrefixIssue": "DR",
+    "commitBeginMessage": ["build: ", "ci: ", "docs: ", "feat: ", "fix: ", "perf: ", "refactor: ", "style: ", "test: "],
+    "commitTransition": ["inprogress", "close", "déclencher-l'accueil"]
+  }
+}

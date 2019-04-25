@@ -1,0 +1,44 @@
+{
+  "name": "cz-jira-smart-commit-fr",
+  "version": "1.0.1",
+  "description": "Un adaptateur commitizen pour Jira smart commits",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec \"npm run test\"",
+    "test": "mocha index.test --compilers js:babel/register",
+    "release": "npm run test && with-package git commit -am pkg.version && with-package git tag pkg.version && git push && npm publish && git push --tags",
+    "release:beta": "npm run release && npm run tag:beta",
+    "tag:beta": "with-package npm dist-tag add pkg.name@pkg.version beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samtronic/cz-jira-smart-commit-fr.git"
+  },
+  "keywords": [
+    "commitizen",
+    "commitizen adapter",
+    "jira",
+    "jira smart commit fr"
+  ],
+  "author": "Steven Paré",
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Samtronic/cz-jira-smart-commit-fr/issues"
+  },
+  "homepage": "https://github.com/Samtronic/cz-jira-smart-commit-fr#readme",
+  "devDependencies": {
+    "babel": "5.8.21",
+    "chai": "3.2.0",
+    "mocha": "2.2.5",
+    "nodemon": "1.4.0",
+    "proxyquire": "^1.7.10",
+    "sinon": "1.15.4",
+    "sinon-chai": "2.8.0",
+    "with-package": "0.2.0"
+  },
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "path": "^0.12.7"
+  }
+}
