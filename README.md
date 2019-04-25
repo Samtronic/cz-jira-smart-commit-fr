@@ -40,7 +40,7 @@ La variable <commitTransition> représente les transitions du Workflow Jira pour
 
 ### Travail au jour le jour
 
-Au lieu d'utiliser `git commit -m 'Your message'`, vous pouvez taper: `git cz` avec cet adaptateur et il vous invite à:
+Au lieu d'utiliser `git commit -m 'Votre message'`, vous pouvez taper: `git cz` avec cet adaptateur et il vous invite à:
 
 - Nom du billet Jira (Peut en avoir plusieurs)
 - Message du commit
