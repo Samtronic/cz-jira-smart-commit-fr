@@ -1,6 +1,7 @@
 var inquirer = require('inquirer');
 var path = require('path');
 var fs = require('fs');
+var branchName = require('current-git-branch');
 
 // Get info 
 var configPath = path.join(process.cwd(), '.cz.json');
@@ -9,6 +10,18 @@ var data = JSON.parse(file.toString('utf8'));
 var jiraIssueRegex = `^${data.scopes.jiraPrefixIssue}-\\d+$`;
 var commitBeginMessage = data.scopes.commitBeginMessage;
 var commitTransition = data.scopes.commitTransition;
+
+// Issues
+var IssuesDefault = null;
+// Get branch name
+var branchName = branchName();
+if (branchName) {
+  var regexIssue = new RegExp(`^.*\\/${data.scopes.jiraPrefixIssue}-(\\d+)-`);
+  var resIssue = regexIssue.exec(branchName);
+  if (resIssue) {
+    IssuesDefault = `${data.scopes.jiraPrefixIssue}-${resIssue[1]}`; // DR-17
+  }
+}
 // This can be any kind of SystemJS compatible module.
 // We use Commonjs here, but ES6 or AMD would do just
 // fine.
@@ -41,6 +54,7 @@ function prompter(cz, commit) {
     {
       type: 'input',
       name: 'issues',
+      default: IssuesDefault,
       message: 'Numéro de billet Jira ex:DR-1 DR-2 (requis):\n',
       validate: function(input) {
         if (!input) {

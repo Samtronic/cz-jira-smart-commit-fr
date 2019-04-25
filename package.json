@@ -1,6 +1,6 @@
 {
   "name": "cz-jira-smart-commit-fr",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Un adaptateur commitizen pour Jira smart commits",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/Samtronic/cz-jira-smart-commit-fr#readme",
   "devDependencies": {},
   "dependencies": {
+    "current-git-branch": "^1.1.0",
     "inquirer": "^6.2.0",
     "path": "^0.12.7"
   }
