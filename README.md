@@ -28,7 +28,7 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
   "path": "node_modules/cz-jira-smart-commit-fr/",
   "scopes": {
     "jiraPrefixIssue": "DR",
-    "commitMessageRegex": "^(build|ci|docs|feat|fix|perf|refactor|style|test):\\s(.*\\w.*)",
+    "commitMessageRegex": "^(build|ci|docs|feat|fix|perf|refactor|style|test)(\\(([a-z]+)\\):|:)\\s([a-z].*)",
     "timeRegex": "^(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m$)|(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m\\s(.*\\w.*))",
     "commitTransition": [
       {"name": "Aucun", "value": null},
@@ -44,7 +44,7 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
       "messageCommit": {
         "message": "Message pour le commit dans Bitbucket. Ce message n'apparaît pas dans Jira. Toujours, commencez le message avec soit (build:, ci:, docs:, feat:, fix:, perf:, refactor:, style:, test:) suivi d'un espace et du message (requis):",
         "errorNoInput": "commit message vide",
-        "errorValidation": "Le commit message n'est pas valide. Voir https://wiki.uqam.ca/display/infra/GitFlow"
+        "errorValidation": "Le commit message n'est pas valide. La première lettre du message doit être en aussi minuscule. Si vous utilisé le scope, il doit être en minuscule. Voir https://wiki.uqam.ca/display/infra/GitFlow"
       },
       "workflow": {
         "message": "Commande de transition pour la fermeture d'un billet par exemple (optionnelle):"
@@ -59,6 +59,8 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
     }
   }
 }
+
+
 
 La variable <jiraPrefixIssue> est le préfix du billet.
 La variable <commitMessageRegex> représente par quoi le client doit commencer son message de commit. Voir https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
