@@ -61,8 +61,10 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
 }
 
 La variable <jiraPrefixIssue> est le préfix du billet.
-La variable <commitBeginMessage> représente par quoi le client doit commencer son message de commit. Voir https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
+La variable <commitMessageRegex> représente par quoi le client doit commencer son message de commit. Voir https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
+La variable <timeRegex> oblige le client à entrer les bonnes informations sur le temps de travaux.
 La variable <commitTransition> représente les transitions du Workflow Jira pour changer le statut des billets.
+Les variables <messages> donne des indications au client lors du commit.
 ```
 
 ### Travail au jour le jour
