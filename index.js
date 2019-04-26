@@ -8,8 +8,9 @@ var configPath = path.join(process.cwd(), '.cz.json');
 var file = fs.readFileSync(configPath);
 var data = JSON.parse(file.toString('utf8'));
 var jiraIssueRegex = `^${data.scopes.jiraPrefixIssue}-\\d+$`;
-var commitBeginMessage = data.scopes.commitBeginMessage;
+var commitMessageRegex = data.scopes.commitMessageRegex;
 var commitTransition = data.scopes.commitTransition;
+var timeRegex = data.scopes.timeRegex
 
 // Issues
 var IssuesDefault = null;
@@ -22,6 +23,13 @@ if (branchName) {
     IssuesDefault = `${data.scopes.jiraPrefixIssue}-${resIssue[1]}`; // DR-17
   }
 }
+
+// Messages
+var issuesMessages = data.scopes.messages.issues;
+var commitMessages = data.scopes.messages.messageCommit;
+var workflowMessages = data.scopes.messages.workflow;
+var timeMessages = data.scopes.messages.time;
+var commentMessages = data.scopes.messages.comment;
 // This can be any kind of SystemJS compatible module.
 // We use Commonjs here, but ES6 or AMD would do just
 // fine.
@@ -55,17 +63,18 @@ function prompter(cz, commit) {
       type: 'input',
       name: 'issues',
       default: IssuesDefault,
-      message: 'Numéro de billet Jira ex:DR-1 DR-2 (requis):\n',
+      message: `${issuesMessages.message}\n`,
       validate: function(input) {
         if (!input) {
-          return 'Vous devez spécifiez un ou des numéros de billet Jira valide. Sinon utilisez simplement un commit message normal (git commit)';
+          return issuesMessages.errorNoInput;
         } else {
           var array = input.split(' ');
           var regex = new RegExp(jiraIssueRegex);
           for (var i = 0; i < array.length; i++) {
             var found = array[i].match(regex);
+            
             if (!found) {
-              return 'Le numéro ou les numéros de billet(s) ne sont pas valide(s)'
+              return issuesMessages.errorValidation
             }
           }
           return true;
@@ -74,24 +83,19 @@ function prompter(cz, commit) {
     },
     {
       type: 'input',
-      name: 'message',
-      message: 'Message pour le commit dans Bitbucket. Ce message n\'apparaît pas dans Jira. Toujours commencez le message avec soit (build:, ci:, docs:, feat:, fix:, perf:, refactor:, style:, test:,) suivi d\'un espace et du message (requis):\n',
+      name: 'messageCommit',
+      message: `${commitMessages.message}\n`,
       validate: function(input) {
         if (!input) {
-          return 'commit message vide';
+          return commitMessages.errorNoInput;
         } else {
-          var validateMessage = false;
-          for (let i = 0; i < commitBeginMessage.length; i++) {
-            var found = input.startsWith(commitBeginMessage[i]);
-            if (found) {
-              validateMessage = true;
-            }
-          }
-          
-          if (validateMessage) {
+          var regex = new RegExp(commitMessageRegex);
+          var found = input.match(regex);
+
+          if (found) {
             return true;
           } else {
-            return 'Le commit message n\'est pas valide. Voir https://wiki.uqam.ca/display/infra/GitFlow';
+            return commitMessages.errorValidation;
           }
         }
       }
@@ -99,18 +103,32 @@ function prompter(cz, commit) {
     {
       type: 'list',
       name: 'workflow',
-      message: 'Commande de transition pour la fermeture d\'un billet par exemple ('+ commitTransition + ') (optionnelle):\n',
+      message: `${workflowMessages.message}\n`,
       choices: commitTransition
     },
     {
       type: 'input',
       name: 'time',
-      message: 'Temps passé (sans commentaire: 1w 2d 4h 30m) (avec commentaire: 1w 2d 4h 30m Total des travaux enregistrés) (optionnel):\n'
+      message: `${timeMessages.message}\n`,
+      validate: function(input) {
+        if (!input) {
+          return true;
+        } else {
+          var regex = new RegExp(timeRegex);
+          var found = input.match(regex);
+
+          if (found) {
+            return true;
+          } else {
+            return timeMessages.errorValidation;
+          }
+        }
+      }
     },
     {
       type: 'input',
       name: 'comment',
-      message: 'Commentaire qui apparaît dans Jira (optionnel):\n'
+      message: `${commentMessages.message}\n`,
     },
   ]).then((answers) => {
     formatCommit(commit, answers);
@@ -119,7 +137,7 @@ function prompter(cz, commit) {
 
 function formatCommit(commit, answers) {
   commit(filter([
-    answers.message,
+    answers.messageCommit,
     answers.issues,
     answers.workflow ? '#' + answers.workflow : undefined,
     answers.time ? '#time ' + answers.time : undefined,
