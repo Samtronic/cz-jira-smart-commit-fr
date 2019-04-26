@@ -97,22 +97,10 @@ function prompter(cz, commit) {
       }
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'workflow',
       message: 'Commande de transition pour la fermeture d\'un billet par exemple ('+ commitTransition + ') (optionnelle):\n',
-      validate: function(input) {
-        if (!input) {
-          return true
-        }
-        
-        for (let i = 0; i < commitTransition.length; i++) {
-          if (input === commitTransition[i]) {
-            return true
-          }
-        }
-
-        return 'La commande de transition n\'existe pas'
-      }
+      choices: commitTransition
     },
     {
       type: 'input',
