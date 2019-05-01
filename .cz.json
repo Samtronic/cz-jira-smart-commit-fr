@@ -1,8 +1,34 @@
 {
-  "path": "./",
+  "path": "node_modules/cz-jira-smart-commit-fr/",
   "scopes": {
     "jiraPrefixIssue": "DR",
-    "commitBeginMessage": ["build: ", "ci: ", "docs: ", "feat: ", "fix: ", "perf: ", "refactor: ", "style: ", "test: "],
-    "commitTransition": ["inprogress", "close", "déclencher-l'accueil"]
+    "commitMessageRegex": "^(build|ci|docs|feat|fix|perf|refactor|style|test)(\\(([a-z]+)\\):|:)\\s([a-z].*)",
+    "timeRegex": "^(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m$)|(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m\\s(.*\\w.*))",
+    "commitTransition": [
+      {"name": "Aucune transition", "value": null, "branch": null},
+      {"name": "En production", "value": "Démarrer la production", "branch": "release"}
+    ],
+    "messages": {
+      "issues": {
+        "message": "Numéro de billet Jira ex:DR-1 DR-2 (requis):",
+        "errorNoInput": "Vous devez spécifiez un ou des numéros de billet Jira valide. Sinon utilisez simplement un commit message normal (git commit)",
+        "errorValidation": "Le numéro ou les numéros de billet(s) ne sont pas valide(s)"
+      },
+      "messageCommit": {
+        "message": "Message pour le commit dans Bitbucket. Ce message n'apparaît pas dans Jira. Toujours, commencez le message avec soit (build:, ci:, docs:, feat:, fix:, perf:, refactor:, style:, test:) suivi d'un espace et du message (requis):",
+        "errorNoInput": "commit message vide",
+        "errorValidation": "Le commit message n'est pas valide. La première lettre du message doit être en aussi minuscule. Si vous utilisé le scope, il doit être en minuscule. Voir https://wiki.uqam.ca/display/infra/GitFlow"
+      },
+      "workflow": {
+        "message": "Commande de transition pour la fermeture d'un billet par exemple (optionnelle):"
+      },
+      "time": {
+        "message": "Temps passé (sans commentaire: 1w 2d 4h 30m) (avec commentaire: 1w 2d 4h 30m Total des travaux enregistrés) (optionnel):",
+        "errorValidation": "Le temps est invalide. Vous devez entrer le temps dans ce format. (sans commentaire: 1w 2d 4h 30m) (avec commentaire: 1w 2d 4h 30m Total des travaux enregistrés)"
+      },
+      "comment": {
+        "message": "Commentaire qui apparaît dans Jira (optionnel):"
+      }
+    }
   }
 }

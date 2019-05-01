@@ -31,9 +31,8 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
     "commitMessageRegex": "^(build|ci|docs|feat|fix|perf|refactor|style|test)(\\(([a-z]+)\\):|:)\\s([a-z].*)",
     "timeRegex": "^(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m$)|(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m\\s(.*\\w.*))",
     "commitTransition": [
-      {"name": "Aucun", "value": null},
-      {"name": "En cours", "value": "déclencher-l'accueil"},
-      {"name": "Fermeture", "value": "close"}
+      {"name": "Aucune transition", "value": null, "branch": null},
+      {"name": "En production", "value": "Démarrer la production", "branch": "release"}
     ],
     "messages": {
       "issues": {
@@ -65,7 +64,7 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
 La variable <jiraPrefixIssue> est le préfix du billet.
 La variable <commitMessageRegex> représente par quoi le client doit commencer son message de commit. Voir https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
 La variable <timeRegex> oblige le client à entrer les bonnes informations sur le temps de travaux.
-La variable <commitTransition> représente les transitions du Workflow Jira pour changer le statut des billets.
+La variable <commitTransition> représente les transitions du Workflow Jira pour changer le statut des billets. L\'object branche représente sur quelle branche on fait apparaître le choix de transition. Il faur nommer les branche d\'après le Workflow gitFlow. Voir https://fr.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 Les variables <messages> donne des indications au client lors du commit.
 ```
 

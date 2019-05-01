@@ -9,7 +9,6 @@ var file = fs.readFileSync(configPath);
 var data = JSON.parse(file.toString('utf8'));
 var jiraIssueRegex = `^${data.scopes.jiraPrefixIssue}-\\d+$`;
 var commitMessageRegex = data.scopes.commitMessageRegex;
-var commitTransition = data.scopes.commitTransition;
 var timeRegex = data.scopes.timeRegex
 
 // Issues
@@ -17,12 +16,15 @@ var IssuesDefault = null;
 // Get branch name
 var branchName = branchName();
 if (branchName) {
-  var regexIssue = new RegExp(`^.*\\/${data.scopes.jiraPrefixIssue}-(\\d+)-`);
+  var regexIssue = new RegExp(`(^.*)\\/${data.scopes.jiraPrefixIssue}-(\\d+)-`);
   var resIssue = regexIssue.exec(branchName);
   if (resIssue) {
-    IssuesDefault = `${data.scopes.jiraPrefixIssue}-${resIssue[1]}`; // DR-17
+    IssuesDefault = `${data.scopes.jiraPrefixIssue}-${resIssue[2]}`; // DR-17
   }
 }
+
+// List (Get Transition on branch name. Ex: (bugfix, release)
+const commitTransition = data.scopes.commitTransition.filter(x => x.branch === resIssue[1] || x.branch === null);
 
 // Messages
 var issuesMessages = data.scopes.messages.issues;
