@@ -24,7 +24,14 @@ if (branchName) {
 }
 
 // List (Get Transition on branch name. Ex: (bugfix, release)
-const commitTransition = data.scopes.commitTransition.filter(x => x.branch === resIssue[1] || x.branch === null);
+var commitTransition = data.scopes.commitTransition.filter(x => x.branch === null);
+if (branchName === 'develop') {
+  commitTransition = data.scopes.commitTransition.filter(x => x.branch === 'develop' || x.branch === null);
+} else {
+  if (resIssue) {
+    commitTransition = data.scopes.commitTransition.filter(x => x.branch === resIssue[1] || x.branch === null);
+  }
+}
 
 // Messages
 var issuesMessages = data.scopes.messages.issues;

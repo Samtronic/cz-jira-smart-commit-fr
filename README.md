@@ -32,7 +32,8 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
     "timeRegex": "^(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m$)|(\\d{1,2}w\\s\\d{1,2}d\\s\\d{1,2}h\\s\\d{1,2}m\\s(.*\\w.*))",
     "commitTransition": [
       {"name": "Aucune transition", "value": null, "branch": null},
-      {"name": "En production", "value": "Démarrer la production", "branch": "release"}
+      {"name": "En production", "value": "Démarrer la production", "branch": "release"},
+      {"name": "Correction en Develop (Va transférer le billet en DÉVELOPPEMENT)", "value": "Démarrer le développement", "branch": "develop"}
     ],
     "messages": {
       "issues": {
@@ -58,6 +59,7 @@ Créer le fichier .cz.json à la racine du projet, avec ses informations
     }
   }
 }
+
 
 
 
